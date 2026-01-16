@@ -1,0 +1,234 @@
+{% extends 'app/layout.html' %}
+{% load static %}
+
+{% block title %}Обо мне | YukkoBlog{% endblock %}
+
+{% block content %}
+<div class="about-page" style="
+    padding: 60px 40px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+">
+    <!-- Декоративные элементы -->
+    <div style="
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+        z-index: 0;
+    "></div>
+    
+    <div style="
+        position: absolute;
+        bottom: -30%;
+        left: -10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(118, 75, 162, 0.1) 0%, transparent 70%);
+        z-index: 0;
+    "></div>
+
+    <!-- Основной контент -->
+    <div style="position: relative; z-index: 1; max-width: 1200px; margin: 0 auto;">
+        <!-- Заголовок -->
+        <div class="header-section" style="text-align: center; margin-bottom: 80px;">
+            <div style="
+                width: 120px;
+                height: 120px;
+                margin: 0 auto 30px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 5px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            ">
+                <img src="{% static 'app/img/cat_logo.png' %}" 
+                     alt="Логотип" 
+                     style="width: 70px; height: 70px; border-radius: 50%;" />
+            </div>
+            
+            <h1 style="
+                font-size: 3.5rem;
+                font-weight: 800;
+                background: linear-gradient(135deg, #fff 0%, #a0aec0 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin-bottom: 20px;
+                text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            ">
+                YukkoBlog
+            </h1>
+            
+            <p style="
+                font-size: 1.3rem;
+                color: #94a3b8;
+                max-width: 600px;
+                margin: 0 auto;
+                line-height: 1.6;
+            ">
+                Пространство для мыслей, идей и творчества
+            </p>
+        </div>
+
+        <!-- Основной текст -->
+        <div class="content-section" style="
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 30px;
+            padding: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            margin-bottom: 60px;
+        ">
+            <div style="
+                font-size: 1.3rem;
+                line-height: 1.8;
+                color: #cbd5e1;
+            ">
+                <p style="margin-bottom: 25px;">
+                    <span style="
+                        display: inline-block;
+                        background: rgba(102, 126, 234, 0.2);
+                        padding: 5px 15px;
+                        border-radius: 20px;
+                        color: #667eea;
+                        font-weight: bold;
+                        margin-bottom: 15px;
+                    ">🎯 О проекте</span>
+                    <br>
+                    Этот сайт - мой первый проект, поэтому я думаю, что я неплохо постарался как минимум что-то сделал. Лол
+                </p>
+                
+                <p style="margin-bottom: 25px;">
+                    <span style="
+                        display: inline-block;
+                        background: rgba(118, 75, 162, 0.2);
+                        padding: 5px 15px;
+                        border-radius: 20px;
+                        color: #a78bfa;
+                        font-weight: bold;
+                        margin-bottom: 15px;
+                    ">💭 Контент</span>
+                    <br>
+                    Здесь я буду просто рассказывать о себе, мб буду выкладывать свои мысли и тд о чем-нибудь.
+                </p>
+                
+                <p style="margin-bottom: 25px;">
+                    <span style="
+                        display: inline-block;
+                        background: rgba(56, 189, 248, 0.2);
+                        padding: 5px 15px;
+                        border-radius: 20px;
+                        color: #38bdf8;
+                        font-weight: bold;
+                        margin-bottom: 15px;
+                    ">🙏 Благодарность</span>
+                    <br>
+                    В любом случае, спасибо, что посетили мою страничку. Мне будет приятно.
+                </p>
+            </div>
+        </div>
+
+        <!-- Карточки с разделами -->
+<div class="cards-section" style="
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+">
+    <!-- Карточка "Посты" с ссылкой -->
+    <a href="{% url 'Posts_page' %}" style="
+        text-decoration: none;
+        display: block;
+    ">
+        <div style="
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            transition: all 0.3s;
+            text-align: center;
+            cursor: pointer;
+            height: 100%;
+        ">
+            <div style="
+                width: 60px;
+                height: 60px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+                font-size: 24px;
+            ">
+                📝
+            </div>
+            <h3 style="color: white; margin-bottom: 15px;">Посты</h3>
+            <p style="color: #94a3b8;">
+                Мои мысли, идеи и заметки на разные темы
+            </p>
+        </div>
+    </a>
+    
+    <!-- Карточка "Почта" с ссылкой -->
+    <a href="{% url 'Mail_page' %}" style="
+        text-decoration: none;
+        display: block;
+    ">
+        <div style="
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            transition: all 0.3s;
+            text-align: center;
+            cursor: pointer;
+            height: 100%;
+        ">
+            <div style="
+                width: 60px;
+                height: 60px;
+                background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 20px;
+                font-size: 24px;
+            ">
+                ✉️
+            </div>
+            <h3 style="color: white; margin-bottom: 15px;">Почта</h3>
+            <p style="color: #94a3b8;">
+                Свяжитесь со мной для предложений и вопросов
+            </p>
+        </div>
+    </a>
+</div>
+
+<style>
+    /* Эффекты при наведении */
+    .cards-section > div:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        border-color: rgba(102, 126, 234, 0.6);
+    }
+    
+    /* Анимация появления */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .about-page {
+        animation: fadeIn 0.8s ease-out;
+    }
+</style>
+{% endblock %}

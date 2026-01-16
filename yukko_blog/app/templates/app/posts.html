@@ -1,0 +1,281 @@
+{% extends 'app/layout.html' %}
+{% load static %}
+
+{% block title %}Посты{% endblock %}
+
+{% block content %}
+<div class="posts-page" style="
+    margin-left: 10px; 
+    padding: 30px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
+    color: white;
+    position: relative;
+">
+    <!-- Кнопка "На главную" слева сверху -->
+    <a href="{% url 'About_page' %}" style="
+        position: fixed;
+        top: 60px;
+        left: 80px;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        background: rgba(102, 126, 234, 0.9);
+        color: white;
+        text-decoration: none;
+        padding: 12px 25px;
+        border-radius: 30px;
+        font-weight: 700;
+        font-size: 16px;
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    ">
+        <svg style="width: 20px; height: 20px; margin-right: 10px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        На главную
+    </a>
+
+    <!-- Шапка страницы -->
+    <div class="page-header" style="text-align: center; margin-bottom: 60px; padding-top: 20px;">
+        <h1 style="
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        ">
+            📝 Все посты
+        </h1>
+        <p style="
+            font-size: 1.2rem; 
+            color: #a0aec0;
+            max-width: 600px; 
+            margin: 0 auto;
+            opacity: 0.8;
+        ">
+            Здесь собраны все мои мысли, идеи и заметки
+        </p>
+        
+        <!-- Счетчик постов -->
+        <div style="
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.2);
+            padding: 10px 25px;
+            border-radius: 50px;
+            margin-top: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.5);
+        ">
+            <span style="color: #667eea; font-weight: bold;">
+                {{ posts|length }}
+            </span> постов на сайте
+        </div>
+    </div>
+
+    <!-- Контейнер для постов -->
+    <div class="posts-container" style="
+        max-width: 1200px;
+        margin: 0 auto;
+    ">
+        {% if posts %}
+            <div class="posts-grid" style="
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 30px;
+            ">
+                {% for el in posts %}
+                <!-- ВЕСЬ блок поста обернут в ссылку -->
+                <a href="{% url 'post_detail' el.id %}" 
+                   style="text-decoration: none; color: inherit; display: block;">
+                    <div class="post-card" style="
+                        background: rgba(45, 55, 72, 0.7);
+                        backdrop-filter: blur(10px);
+                        border-radius: 15px;
+                        padding: 30px;
+                        border: 1px solid rgba(102, 126, 234, 0.3);
+                        transition: all 0.3s ease;
+                        position: relative;
+                        overflow: hidden;
+                        cursor: pointer;
+                        height: 100%;
+                    ">
+                        <!-- Индикатор кликабельности -->
+                        <div style="
+                            position: absolute;
+                            top: 15px;
+                            right: 15px;
+                            color: rgba(102, 126, 234, 0.6);
+                            font-size: 0.9rem;
+                            display: flex;
+                            align-items: center;
+                            opacity: 0;
+                            transition: opacity 0.3s;
+                        ">
+                            <svg style="width: 16px; height: 16px; margin-right: 5px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                            Читать
+                        </div>
+                        
+                        <!-- Цветная полоса -->
+                        <div style="
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 6px;
+                            height: 100%;
+                            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+                        "></div>
+                        
+                        <!-- Заголовок поста -->
+                        <h3 style="
+                            font-size: 1.5rem;
+                            color: #fff;
+                            margin-bottom: 15px;
+                            padding-left: 15px;
+                            padding-right: 60px;
+                        ">
+                            {{ el.title }}
+                        </h3>
+                        
+                        <!-- Текст поста (укороченный) -->
+                        <div style="
+                            color: #a0aec0;
+                            line-height: 1.6;
+                            margin-bottom: 20px;
+                            padding-left: 15px;
+                            flex-grow: 1;
+                        ">
+                            {{ el.full_text|truncatewords:30|linebreaks }}
+                        </div>
+                        
+                        <!-- Дата публикации -->
+                        <div style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-top: 20px;
+                            padding-top: 15px;
+                            border-top: 1px solid rgba(255,255,255,0.1);
+                            padding-left: 15px;
+                        ">
+                            <span style="
+                                font-size: 0.9rem;
+                                color: #718096;
+                                display: flex;
+                                align-items: center;
+                            ">
+                                <svg style="width: 16px; height: 16px; margin-right: 8px;" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                </svg>
+                                {{ el.date|date:"d.m.Y H:i" }}
+                            </span>
+                            
+                            <span style="
+                                background: rgba(102, 126, 234, 0.2);
+                                color: #667eea;
+                                padding: 5px 15px;
+                                border-radius: 20px;
+                                font-size: 0.9rem;
+                                font-weight: bold;
+                            ">
+                                Пост #{{ forloop.counter }}
+                            </span>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Если постов нет -->
+            <div style="
+                text-align: center;
+                padding: 80px 20px;
+                background: rgba(45, 55, 72, 0.5);
+                border-radius: 15px;
+                border: 2px dashed rgba(102, 126, 234, 0.3);
+            ">
+                <div style="font-size: 5rem; color: rgba(102, 126, 234, 0.3); margin-bottom: 20px;">
+                    📝
+                </div>
+                <h3 style="color: #a0aec0; margin-bottom: 15px;">
+                    Пока нет постов
+                </h3>
+                <p style="color: #718096;">
+                    Но скоро они появятся! Ожидайте новых публикаций.
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    /* Стили для кнопки "На главную" при наведении */
+    a[href*="about"]:hover {
+        background: rgba(118, 75, 162, 0.9);
+        transform: translateX(-5px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+
+    /* Стили для карточек постов - ВЕСЬ блок кликабельный */
+    a:hover .post-card {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        border-color: rgba(102, 126, 234, 0.6);
+    }
+    
+    a:hover .post-card > div:first-child {
+        opacity: 1;
+    }
+    
+    /* Эффект при нажатии */
+    a:active .post-card {
+        transform: translateY(-5px) scale(0.98);
+        transition: transform 0.1s ease;
+    }
+    
+    /* Плавное появление карточек */
+    @keyframes cardAppear {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .post-card {
+        animation: cardAppear 0.5s ease-out;
+        animation-fill-mode: both;
+    }
+    
+    /* Задержка анимации для каждой карточки */
+    .posts-grid a:nth-child(1) .post-card { animation-delay: 0.1s; }
+    .posts-grid a:nth-child(2) .post-card { animation-delay: 0.2s; }
+    .posts-grid a:nth-child(3) .post-card { animation-delay: 0.3s; }
+    .posts-grid a:nth-child(4) .post-card { animation-delay: 0.4s; }
+    .posts-grid a:nth-child(5) .post-card { animation-delay: 0.5s; }
+    
+    /* Для мобильных */
+    @media (max-width: 768px) {
+        a:hover .post-card {
+            transform: translateY(-5px);
+        }
+        
+        a:active .post-card {
+            transform: translateY(-2px) scale(0.98);
+        }
+        
+        .post-card > div:first-child {
+            display: none;
+        }
+        
+        h3 {
+            padding-right: 15px !important;
+        }
+    }
+</style>
+{% endblock %}
