@@ -1,1 +1,2 @@
-web: gunicorn yukko_blog.wsgi:application --log-file -
+web: gunicorn config.wsgi:application 
+
