@@ -16,23 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth.models import User
-from django.http import HttpResponse
-
-def create_admin(request):
-    # Защита: только если на Render и нет пользователей
-    if '.onrender.com' in request.get_host() and not User.objects.exists():
-        User.objects.create_superuser(
-            username='yukkoGod',
-            email='ivansila2707@mail.ru',
-            password='god2707'  # ПОМЕНЯЙ ПАРОЛЬ!
-        )
-        return HttpResponse('<h1>Admin created!</h1><p>Username: admin<br>Password: admin123</p>')
-    else:
-        return HttpResponse('<h1>Admin already exists or not on Render</h1>')
 
 urlpatterns = [
-    path('create-admin/', create_admin),  # ДОБАВЬ ЭТУ СТРОЧКУ
     path('admin/', admin.site.urls),
     path("", include('yukko_blog.app.urls')),
 ]
