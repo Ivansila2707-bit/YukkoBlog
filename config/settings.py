@@ -84,3 +84,16 @@ STATICFILES_DIRS = [
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
+import sys
+
+if 'runserver' not in sys.argv and 'migrate' not in sys.argv:
+    try:
+        print("=" * 50, file=sys.stderr)
+        print("FORCE RUNNING MIGRATIONS ON STARTUP", file=sys.stderr)
+        from django.core.management import execute_from_command_line
+        execute_from_command_line(['manage.py', 'migrate', '--noinput'])
+        print("MIGRATIONS COMPLETED SUCCESSFULLY", file=sys.stderr)
+        print("=" * 50, file=sys.stderr)
+    except Exception as e:
+        print(f"MIGRATION ERROR: {e}", file=sys.stderr)
